@@ -1,6 +1,7 @@
 #In this problem we will explore fluid flow through a pipe. This example was taken from https://jsdokken.com/dolfinx-tutorial/chapter2/ns_code1.html
 #This example explores Fenics useage for the Navier Stokes equation
 #There will be a final visualization image created from this code that shows fluid flowing through a pipe
+#In this example the Navier-Stokes equation will simplify because we can assume velocity in the y direction is zero and the x direction velocity will be only a function of y
 
 
 
