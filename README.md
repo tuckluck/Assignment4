@@ -29,6 +29,5 @@ pip install gmsh
 ```bash
 pip install PyYAML
 ```
-
-
+Then open fluid_flow.py in vscode on the SCC and run the file
 
