@@ -244,4 +244,4 @@ plotter.add_mesh(glyphs)
 plotter.view_xy()
 
 # Save the screenshot to a file
-plotter.screenshot("pipe_flow_visual.png")
+plotter.screenshot("PartA_pipe_flow_visual.png")
