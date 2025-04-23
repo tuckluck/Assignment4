@@ -29,5 +29,24 @@ pip install gmsh
 ```bash
 pip install PyYAML
 ```
-Then open fluid_flow.py in vscode on the SCC and run the file
+Part A:
+For Part A, please refer to PartA_fluid_flow.py
+In this example, I explore uniform fluid flow in a pipe with the Navier Stokes equation. A pressure differential moves fluid through a pipe and no-slip boundry conditions at the edges of the pipe lead to a parabolic flow profile seen in the image below. Fenicsx was used to create the mesh and solve the partial differential equation. 
+
+![pipe_flow_visual](https://github.com/user-attachments/assets/0a8b946a-456a-4988-805b-633e06942785)
+
+
+
+Part B:
+In part B, I explored mesh refinement. I used a simple fixed-free beam in this example to study how the weight of the beam would lead to a displacement at different points along the beams length. I adjusted the number of nodes along the length of the beam to see when the solution for maximum displacment converged and the additional nodes were no longer increasing the accuracy of the solution and only costing additional computing power. The first image below shows the displacement of the beam, and the second image shows the h-refinement graph. 
+
+![deflection](https://github.com/user-attachments/assets/fc328f71-a128-429d-9158-9be509142a0d)
+
+![Beam_h-refine](https://github.com/user-attachments/assets/5cebbfe5-4fee-4716-9e51-dbec2bf1d7e4)
+
+
+Part C:
+In Part C, I explored how Fenicsx would fail to solve a specific problem. I once again returned to the fluid flow problem explored in Part A. In this example, I adjusted the number of steps used to solve the differential equation to 5 steps from 500 steps. This reduction in number of setps lead to a strange outcome, the flow reversed in the pipe as seen in the image below. This result is clearly not correct given the boundry conditions and the pressure differential. The reduction in steps to this level lead to a false result, proving the importance of understanding results and checking answers when working with open source software. 
+
+![PartC_pipe_flow_visual](https://github.com/user-attachments/assets/675fe48d-da3d-4b12-a6c9-8a6165b00b8b)
 
