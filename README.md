@@ -29,6 +29,9 @@ pip install gmsh
 ```bash
 pip install PyYAML
 ```
+
+All python files mentioned below should be opened in VS Code on the SCC using the virtual enviornment created above. 
+
 Part A:
 
 For Part A, please refer to PartA_fluid_flow.py
