@@ -1,0 +1,1 @@
+In this assignment i used chatGPT to help me understand some of the confusing syntax in Fenicsx, to help plot functions properly and to understand how to adjust the elements from linear to quadratic.
