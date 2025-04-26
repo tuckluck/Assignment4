@@ -35,10 +35,11 @@ All python files mentioned below should be opened in VS Code on the SCC using th
 Part A:
 
 For Part A, please refer to PartA_fluid_flow.py
-In this example, I explore uniform fluid flow in a pipe with the Navier Stokes equation. A pressure differential moves fluid through a pipe and no-slip boundry conditions at the edges of the pipe lead to a parabolic flow profile seen in the image below. Fenicsx was used to create the mesh and solve the partial differential equation. 
+In this example, I explore uniform fluid flow in a pipe with the Navier Stokes equation. A pressure differential moves fluid through a pipe and no-slip boundry conditions at the edges of the pipe lead to a parabolic flow profile seen in the image below. Fenicsx was used to create the mesh and solve the partial differential equation. I compared the fenicx solution to the analytical solution for this problem which can be seen in the screenshot below. 
 
 ![pipe_flow_visual](https://github.com/user-attachments/assets/0a8b946a-456a-4988-805b-633e06942785)
 
+![image](https://github.com/user-attachments/assets/e0dc8d94-9925-4f94-8ce8-97e31793e1e8)
 
 
 Part B:
