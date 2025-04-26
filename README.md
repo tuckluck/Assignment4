@@ -47,7 +47,8 @@ Refer to PartB_Beam_Bending.py. In part B, I explored mesh refinement. I used a 
 
 ![deflection](https://github.com/user-attachments/assets/fc328f71-a128-429d-9158-9be509142a0d)
 
-![Beam_h-refine](https://github.com/user-attachments/assets/5cebbfe5-4fee-4716-9e51-dbec2bf1d7e4)
+![Mesh Refinement](https://github.com/user-attachments/assets/a979d576-80ea-4ece-81cb-7b6f32d7f60f)
+
 
 
 Part C:
