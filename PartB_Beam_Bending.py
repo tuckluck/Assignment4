@@ -18,61 +18,74 @@ beta = 1.25
 lambda_ = beta
 g = gamma
 
-displace_list = []
+displace_list_1 = []
+displace_list_2 = []
 mesh_list = []
 
-for j in range(2,30):
-    # Create mesh and function space
-    domain = mesh.create_box(MPI.COMM_WORLD, [np.array([0, 0, 0]), np.array([L, W, W])],[j, 6, 6], cell_type=mesh.CellType.hexahedron)
-    V = fem.functionspace(domain, ("Lagrange", 1, (domain.geometry.dim,)))
-
-    # Boundary condition
-    def clamped_boundary(x):
-        return np.isclose(x[0], 0)
-
-    fdim = domain.topology.dim - 1
-    boundary_facets = mesh.locate_entities_boundary(domain, fdim, clamped_boundary)
-    u_D = np.array([0, 0, 0], dtype=default_scalar_type)
-    bc = fem.dirichletbc(u_D, fem.locate_dofs_topological(V, fdim, boundary_facets), V)
-
-    # Define forces and measures
-    T = fem.Constant(domain, default_scalar_type((0, 0, 0)))
-    ds = ufl.Measure("ds", domain=domain)
-
-    def epsilon(u):
-        return ufl.sym(ufl.grad(u))
-
-    def sigma(u):
-        return lambda_ * ufl.nabla_div(u) * ufl.Identity(len(u)) + 2 * mu * epsilon(u)
-
-    # Define variational problem
-    u = ufl.TrialFunction(V)
-    v = ufl.TestFunction(V)
-    f = fem.Constant(domain, default_scalar_type((0, 0, -rho * g)))
-    a = ufl.inner(sigma(u), epsilon(v)) * ufl.dx
-    L_form = ufl.dot(f, v) * ufl.dx + ufl.dot(T, v) * ds
-
-    problem = LinearProblem(a, L_form, bcs=[bc],petsc_options={"ksp_type": "preonly", "pc_type": "lu"})
-    uh = problem.solve()
-
-    # Compute magnitude of displacement at each node
-    u_array = uh.x.array.reshape((-1, 3))  # reshape to N x 3 (vector)
-    u_magnitude = np.linalg.norm(u_array, axis=1)
-
-    # Find max deflection and corresponding point index
-    max_deflection = np.max(u_magnitude)
-    max_index = np.argmax(u_magnitude)
-    max_point_coords = domain.geometry.x[max_index]
+for order in range (1,3):
     
-    displace_list.append(max_deflection)
-    mesh_list.append(j)
-    
+
+    for j in range(2,30):
+        # Create mesh and function space
+        domain = mesh.create_box(MPI.COMM_WORLD, [np.array([0, 0, 0]), np.array([L, W, W])],[j, 6, 6], cell_type=mesh.CellType.hexahedron)
+        V = fem.functionspace(domain, ("Lagrange", order, (domain.geometry.dim,)))
+
+        # Boundary condition
+        def clamped_boundary(x):
+            return np.isclose(x[0], 0)
+
+        fdim = domain.topology.dim - 1
+        boundary_facets = mesh.locate_entities_boundary(domain, fdim, clamped_boundary)
+        u_D = np.array([0, 0, 0], dtype=default_scalar_type)
+        bc = fem.dirichletbc(u_D, fem.locate_dofs_topological(V, fdim, boundary_facets), V)
+
+        # Define forces and measures
+        T = fem.Constant(domain, default_scalar_type((0, 0, 0)))
+        ds = ufl.Measure("ds", domain=domain)
+
+        def epsilon(u):
+            return ufl.sym(ufl.grad(u))
+
+        def sigma(u):
+            return lambda_ * ufl.nabla_div(u) * ufl.Identity(len(u)) + 2 * mu * epsilon(u)
+
+        # Define variational problem
+        u = ufl.TrialFunction(V)
+        v = ufl.TestFunction(V)
+        f = fem.Constant(domain, default_scalar_type((0, 0, -rho * g)))
+        a = ufl.inner(sigma(u), epsilon(v)) * ufl.dx
+        L_form = ufl.dot(f, v) * ufl.dx + ufl.dot(T, v) * ds
+
+        problem = LinearProblem(a, L_form, bcs=[bc],petsc_options={"ksp_type": "preonly", "pc_type": "lu"})
+        uh = problem.solve()
+
+        # Compute magnitude of displacement at each node
+        u_array = uh.x.array.reshape((-1, 3))  # reshape to N x 3 (vector)
+        u_magnitude = np.linalg.norm(u_array, axis=1)
+
+        # Find max deflection and corresponding point index
+        max_deflection = np.max(u_magnitude)
+        max_index = np.argmax(u_magnitude)
+
+        dof_coordinates = V.tabulate_dof_coordinates()  #new
+        max_point_coords = dof_coordinates[max_index]  #new
+
+
+        if order == 1:
+            displace_list_1.append(max_deflection)
+            mesh_list.append(j)
+        else:
+            displace_list_2.append(max_deflection)
 #rint(displace_list)
 #print(mesh_list)
 
 
-plt.plot(mesh_list,displace_list)
-plt.title("H-Refinement")                 # Title of the plot
+#plt.plot(mesh_list,displace_list_1)
+plt.plot(mesh_list, displace_list_1, label='First Order Elements', color='blue')  # Just a line
+plt.plot(mesh_list, displace_list_2, label='Second Order Elements', color='red')   # Another line
+plt.title("Mesh Refinement")                 # Title of the plot
 plt.xlabel("Number of Nodes Along Length")         # Label for x-axis
 plt.ylabel("Max Displacement")  
-plt.savefig("Beam_h-refine", dpi=300)
+plt.legend(loc='lower right')
+
+plt.savefig("Mesh Refinement", dpi=300)
