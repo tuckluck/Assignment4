@@ -43,7 +43,7 @@ In this example, I explore uniform fluid flow in a pipe with the Navier Stokes e
 
 Part B:
 
-Refer to PartB_Beam_Bending.py. In part B, I explored mesh refinement. I used a simple fixed-free beam in this example to study how the weight of the beam would lead to a displacement at different points along the beams length. I adjusted the number of nodes along the length of the beam to see when the solution for maximum displacment converged and the additional nodes were no longer increasing the accuracy of the solution and only costing additional computing power. The first image below shows the displacement of the beam, and the second image shows the h-refinement graph. 
+Refer to PartB_Beam_Bending.py. In part B, I explored mesh refinement. I used a simple fixed-free beam in this example to study how the weight of the beam would lead to a displacement at different points along the beams length. I adjusted the number of nodes along the length of the beam to see when the solution for maximum displacment converged and the additional nodes were no longer increasing the accuracy of the solution and only costing additional computing power. The first image below shows the displacement of the beam, and the second image shows the refinement graph. The refinement graph shows both linear elements and quadratic elements. One can see how much more quickly the quadratic elements converge as compared to the linear elements. 
 
 ![deflection](https://github.com/user-attachments/assets/fc328f71-a128-429d-9158-9be509142a0d)
 
